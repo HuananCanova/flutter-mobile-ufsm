@@ -92,16 +92,15 @@ class _WorkoutListPageState extends State<WorkoutListPage> {
                 child: ListTile(
                   title: Row(
                     children: [
+                      Icon(
+                        isSelected ? Icons.check_circle : Icons.check_circle_outline,
+                        color: isSelected ? Colors.green : Colors.grey,
+                      ),
+                      SizedBox(width: 8),
                       Text(
                         workout.title,
                         style: TextStyle(fontSize: 22),
                       ),
-                      SizedBox(width: 8),
-                      if (isSelected)
-                        Icon(
-                          Icons.check,
-                          color: Colors.green,
-                        ),
                     ],
                   ),
                   subtitle: Padding(

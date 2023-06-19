@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../components/button.dart';
 import '../database/userdao.dart';
 import '../model/user.dart';
+import 'loginpage.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -18,6 +19,13 @@ class _SignupPageState extends State<SignupPage> {
 
   final _formKey = GlobalKey<FormState>();
 
+  void printUserDetails(User user) {
+    print('User Details:');
+    print('Name: ${user.name}');
+    print('Email: ${user.email}');
+    print('Password: ${user.password}');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,70 +40,77 @@ class _SignupPageState extends State<SignupPage> {
           color: Colors.white,
         ),
       ),
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              MyTextSignUp(
-                label: 'Name:',
-                controller: _nameController,
-                hintText: 'Name',
-                obscureText: false,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your name';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 8),
-              MyTextSignUp(
-                label: 'Email:',
-                controller: _emailController,
-                hintText: 'Email',
-                obscureText: false,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  // You can add more complex email validation logic here if needed
-                  return null;
-                },
-              ),
-              const SizedBox(height: 8),
-              MyTextSignUp(
-                label: 'Password:',
-                controller: _passwordController,
-                hintText: 'Password',
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  // You can add more complex password validation logic here if needed
-                  return null;
-                },
-              ),
-              const SizedBox(height: 25),
-              MyButton(
-                onTap: () {
-                  if (_formKey.currentState?.validate() ?? false) {
-                    User user = new User(id: '0', name: _nameController.text, email: _emailController.text, password: _passwordController.text);
-                    UserDao().addUser(user);
-                    Navigator.of(context).pop();
-                  }
-                },
-                text: "Sign Up",
-              ),
-            ],
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                MyTextSignUp(
+                  label: 'Name:',
+                  controller: _nameController,
+                  hintText: 'Name',
+                  obscureText: false,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your name';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 8),
+                MyTextSignUp(
+                  label: 'Email:',
+                  controller: _emailController,
+                  hintText: 'Email',
+                  obscureText: false,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email';
+                    }
+                    // You can add more complex email validation logic here if needed
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 8),
+                MyTextSignUp(
+                  label: 'Password:',
+                  controller: _passwordController,
+                  hintText: 'Password',
+                  obscureText: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    }
+                    // You can add more complex password validation logic here if needed
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 25),
+                MyButton(
+                  onTap: () {
+                    if (_formKey.currentState?.validate() ?? false) {
+                      User user = User(
+                        name: _nameController.text,
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                      );
+                      UserDao().addUser(user);
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  text: "Sign Up",
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
+
 }
 
 class MyTextSignUp extends StatelessWidget {
@@ -151,4 +166,3 @@ class MyTextSignUp extends StatelessWidget {
     );
   }
 }
-
