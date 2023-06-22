@@ -4,25 +4,21 @@ import '../components/button.dart';
 import '../components/textfield.dart';
 import '../database/userdao.dart';
 import '../model/user.dart';
-import 'mainpage.dart'; // Importe a página de cadastro de usuário aqui
+import 'mainpage.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
-
-
-
+  
   bool verifyCredentials(String email, String password) {
-    // Itera sobre a lista de usuários
     for (User user in UserDao().userList) {
       if (user.email == email && user.password == password) {
-        return true; // Credenciais correspondem a uma conta existente
+        return true;
       }
     }
-    return false; // Credenciais não correspondem a nenhuma conta existente
+    return false;
   }
 
   void showSuccessMessage(BuildContext context) {
@@ -40,7 +36,7 @@ class LoginPage extends StatelessWidget {
 
     // Verifica as credenciais
     if (verifyCredentials(email, password)) {
-      showSuccessMessage(context); // Exibe uma mensagem de sucesso
+      showSuccessMessage(context);
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => MainPage()),
       );
@@ -95,7 +91,6 @@ class LoginPage extends StatelessWidget {
                 MyButton(
                   onTap: () {
                     signUserIn(context);
-                    // Chama a função signUserIn passando o contexto
                   },
                   text: 'Sign In',
                 ),

@@ -97,6 +97,7 @@ class _SignupPageState extends State<SignupPage> {
                         email: _emailController.text,
                         password: _passwordController.text,
                       );
+                      printUserDetails(user);
                       UserDao().addUser(user);
                       Navigator.of(context).pop();
                     }
