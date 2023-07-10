@@ -1,4 +1,5 @@
 import 'package:fitness_track/screens/signuppage.dart';
+import 'package:fitness_track/service/loginservice.dart';
 import 'package:flutter/material.dart';
 import '../components/button.dart';
 import '../components/textfield.dart';
@@ -33,6 +34,9 @@ class LoginPage extends StatelessWidget {
   void signUserIn(BuildContext context) {
     String email = emailController.text;
     String password = passwordController.text;
+
+    new LoginService();
+
 
     // Verifica as credenciais
     if (verifyCredentials(email, password)) {

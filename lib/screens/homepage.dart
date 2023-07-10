@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-
 import '../components/button.dart';
 import 'loginpage.dart';
 
@@ -16,7 +14,7 @@ class HomePage extends StatelessWidget {
         child: Center(
           child: Column(
             children: <Widget>[
-              Image.asset('assets/images/homepicture.jpg', width: 400),
+              Image.asset('assets/images/homepicture.jpg', width: 450),
               const SizedBox(height: 40),
               Text('Welcome to \n Fit Tracker',
                 style: TextStyle(

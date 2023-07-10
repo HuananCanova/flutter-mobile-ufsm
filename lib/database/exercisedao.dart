@@ -1,5 +1,6 @@
 import '../model/exercise.dart';
 
+
 class ExerciseDao{
   static List<Exercise> exercises = [
     Exercise(id: 1, name: 'Supino', category: 'Peito'),

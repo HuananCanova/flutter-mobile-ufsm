@@ -70,7 +70,6 @@ class _SignupPageState extends State<SignupPage> {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email';
                     }
-                    // You can add more complex email validation logic here if needed
                     return null;
                   },
                 ),
