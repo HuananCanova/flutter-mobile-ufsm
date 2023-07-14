@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
+import '../database/logindao.dart';
+import '../model/login.dart';
+
 class LoginService{
 
   final String API_REST = "http://10.0.2.2:8080";
