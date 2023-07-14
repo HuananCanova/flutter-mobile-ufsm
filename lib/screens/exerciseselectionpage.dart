@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../model/exercise.dart';
+import '../service/exerciseservice.dart';
 
 class ExerciseSelectionPage extends StatefulWidget {
   @override
@@ -11,6 +12,7 @@ class ExerciseSelectionPage extends StatefulWidget {
 }
 
 class _ExerciseSelectionPageState extends State<ExerciseSelectionPage> {
+  ExerciseService exerciseService = ExerciseService();
   List<Exercise> exercises = [];
   List<Exercise> selectedExercises = [];
 
@@ -20,22 +22,14 @@ class _ExerciseSelectionPageState extends State<ExerciseSelectionPage> {
     fetchExercises();
   }
 
-  Future<void> fetchExercises() async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:8080/exercise'));
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      List<Exercise> fetchedExercises = [];
-      for (var exerciseData in data) {
-        Exercise exercise = Exercise(
-          id: exerciseData['id'],
-          name: exerciseData['name'],
-          category: exerciseData['category'],
-        );
-        fetchedExercises.add(exercise);
-      }
+  void fetchExercises() async {
+    try {
+      List<Exercise> fetchedExercises = await exerciseService.fetchExercises();
       setState(() {
         exercises = fetchedExercises;
       });
+    } catch (e) {
+      print('Error fetching exercises: $e');
     }
   }
 
@@ -124,9 +118,10 @@ class _ExerciseSelectionPageState extends State<ExerciseSelectionPage> {
                         ),
                       ),
                       subtitle: Text('Grupo: ' + exercise.category),
-                      trailing: isSelected
-                          ? Icon(Icons.check_circle, color: Colors.green)
-                          : Icon(Icons.check_circle),
+                      trailing: Icon(
+                        Icons.check_circle,
+                        color: isSelected ? Colors.green : null,
+                      ),
                       onTap: () => toggleExerciseSelection(exercise),
                     ),
                     Divider(

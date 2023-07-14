@@ -1,8 +1,7 @@
 import 'package:sqflite/sqflite.dart';
-
 import '../model/login.dart';
 
-class LoginDAO{
+class LoginDao{
   adicionar(Login u) async{
 
     final Database db = await getDatabase();

@@ -1,10 +1,9 @@
 import 'package:fitness_track/screens/signuppage.dart';
-import 'package:fitness_track/service/loginservice.dart';
 import 'package:flutter/material.dart';
+
 import '../components/button.dart';
 import '../components/textfield.dart';
-import '../database/userdao.dart';
-import '../model/user.dart';
+import '../service/loginservice.dart';
 import 'mainpage.dart';
 
 class LoginPage extends StatelessWidget {
@@ -12,34 +11,15 @@ class LoginPage extends StatelessWidget {
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  
-  bool verifyCredentials(String email, String password) {
-    for (User user in UserDao().userList) {
-      if (user.email == email && user.password == password) {
-        return true;
-      }
-    }
-    return false;
-  }
 
-  void showSuccessMessage(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Loogin efetuado!', style: TextStyle(color: Colors.white, fontSize: 16),),
-        backgroundColor: Colors.green,
-      ),
-    );
-  }
-
-  void signUserIn(BuildContext context) {
+  void signUserIn(BuildContext context) async {
     String email = emailController.text;
     String password = passwordController.text;
 
-    new LoginService();
+    LoginService loginService = LoginService();
+    bool isAuthenticated = await loginService.login(email, password);
 
-
-    // Verifica as credenciais
-    if (verifyCredentials(email, password)) {
+    if (isAuthenticated) {
       showSuccessMessage(context);
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => MainPage()),
@@ -48,12 +28,27 @@ class LoginPage extends StatelessWidget {
       // Exibe uma mensagem de erro
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Email ou senha inválido!', style: TextStyle(color: Colors.white, fontSize: 16),),
+          content: Text(
+            'Email ou senha inválido!',
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
           backgroundColor: Colors.black,
           duration: Duration(seconds: 3),
         ),
       );
     }
+  }
+
+  void showSuccessMessage(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          'Login efetuado!',
+          style: TextStyle(color: Colors.white, fontSize: 16),
+        ),
+        backgroundColor: Colors.green,
+      ),
+    );
   }
 
   @override
@@ -113,8 +108,6 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 25),
-
-                //CREATE ACCOUNT
                 GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(

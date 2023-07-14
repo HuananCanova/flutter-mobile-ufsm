@@ -1,4 +1,3 @@
-
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -9,8 +8,8 @@ Future<Database> getDatabase() async{
   return openDatabase(
       path,
       onCreate: (db, version){
-        db.execute('CREATE TABLE USUARIO (id INTEGER PRIMARY KEY, nome TEXT, cpf TEXT) ');
-        db.execute('CREATE TABLE LOGIN (id INTEGER PRIMARY KEY, login TEXT, senha TEXT, permissao TEXT, token TEXT) ');
+        db.execute('CREATE TABLE User (id INTEGER PRIMARY KEY, nome TEXT, email TEXT, password TEXT) ');
+        db.execute('CREATE TABLE LOGIN (id INTEGER PRIMARY KEY, login TEXT, password TEXT, permissao TEXT, token TEXT) ');
       },
       version: 1);
 

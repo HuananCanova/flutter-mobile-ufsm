@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
 import '../components/button.dart';
-import '../database/userdao.dart';
 import '../model/user.dart';
+import '../database/userdao.dart';
 import 'loginpage.dart';
 
 class SignupPage extends StatefulWidget {
@@ -24,6 +23,22 @@ class _SignupPageState extends State<SignupPage> {
     print('Name: ${user.name}');
     print('Email: ${user.email}');
     print('Password: ${user.password}');
+  }
+
+  void createUser() {
+    if (_formKey.currentState!.validate()) {
+      String name = _nameController.text;
+      String email = _emailController.text;
+      String password = _passwordController.text;
+
+      User newUser = User(name: name, email: email, password: password);
+      printUserDetails(newUser);
+
+      // Redirecione para a tela de login
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    }
   }
 
   @override
@@ -89,18 +104,7 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 const SizedBox(height: 25),
                 MyButton(
-                  onTap: () {
-                    if (_formKey.currentState?.validate() ?? false) {
-                      User user = User(
-                        name: _nameController.text,
-                        email: _emailController.text,
-                        password: _passwordController.text,
-                      );
-                      printUserDetails(user);
-                      UserDao().addUser(user);
-                      Navigator.of(context).pop();
-                    }
-                  },
+                  onTap: createUser,
                   text: "Sign Up",
                 ),
               ],
@@ -110,7 +114,6 @@ class _SignupPageState extends State<SignupPage> {
       ),
     );
   }
-
 }
 
 class MyTextSignUp extends StatelessWidget {

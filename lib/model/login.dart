@@ -11,6 +11,7 @@ class Login{
         json['permissao'], json['token']);
   }
 
+
   Map<String, dynamic> toMap() {
     return {
       'login': login,
@@ -19,5 +20,6 @@ class Login{
       'token': token,
     };
   }
+
 
 }

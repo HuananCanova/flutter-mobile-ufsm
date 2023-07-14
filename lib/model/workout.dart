@@ -8,11 +8,6 @@ class Workout {
 
   Workout({required this.title, required this.exercises});
 
-  void save() {
-    // Lógica para salvar o treino em algum lugar
-    print('Workout saved: $title');
-    print('Exercises: ${exercises.map((exercise) => exercise.name).toList()}');
-  }
 
 }
 
